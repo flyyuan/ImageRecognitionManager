@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mainActivityBackground">#386c6868</color>
+    <color name="white">#f9f7f7</color>
+    <color name="background">#f790ad</color>
+    <color name="colorPrimary">#3445e2</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="buttonColor">#1abf55</color>
+</resources>

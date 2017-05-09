@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainActivityBackground">
+
+    <TextView
+        android:id="@+id/imageinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="请选择需要上传的图片"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+    <Button
+        android:onClick="selectImage"
+        android:id="@+id/selectImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/buttonColor"
+        android:textSize="20dp"
+        android:text="选择图片"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+    <Button
+        android:onClick="upload"
+        android:id="@+id/imageUpload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/buttonColor"
+        android:text="上传图片"
+        android:textSize="20dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="5dp"
+        android:numColumns="3"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:verticalSpacing="5dp"></GridView>
+
+</LinearLayout>
