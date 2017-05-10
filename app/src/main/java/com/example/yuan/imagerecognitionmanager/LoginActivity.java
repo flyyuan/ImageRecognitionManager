@@ -2,13 +2,16 @@ package com.example.yuan.imagerecognitionmanager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -48,10 +51,14 @@ public class LoginActivity  extends AppCompatActivity {
     private LoginApi loginApi = null;
     private EditText editText_username;
     private EditText editText_pwd;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
     @BindView(R.id.btn_login)
     Button btnLogin;
     @BindView(R.id.btn_signup)
     Button btnSignup;
+    @BindView(R.id.remember_pass)
+    CheckBox rememberPass;
 
 
     @Override
@@ -59,16 +66,22 @@ public class LoginActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initRetrofit();
         setContentView(R.layout.activity_login);
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
         initView();
+        useRememberUser();
 
     }
+
+
+
     private void initView() {
         editText_username = (EditText) findViewById(R.id.input_username);
         editText_pwd = (EditText) findViewById(R.id.input_passwords);
+        rememberPass = (CheckBox) findViewById(R.id.remember_pass);
     }
 
 
-    //拦截器
+    //拦截器(未使用)
 
 
     //初始化Retrofit，创建Retrofit实例，建立Retrofit客户端
@@ -80,11 +93,21 @@ public class LoginActivity  extends AppCompatActivity {
     }
 
 
-
+    //点击登录按钮所执行的方法
     public void login(View v){
         String username = editText_username.getText() + "";
         String password = editText_pwd.getText() + "";
         String mobileLogin = "true";
+        //使用SP进行储存账号和密码
+        editor = pref.edit();
+        if (rememberPass.isChecked()){
+            editor.putBoolean("remember_password", true);
+            editor.putString("username", username);
+            editor.putString("password", password);
+        }else {
+            editor.clear();
+        }
+        editor.apply();
         //使用HashMap的map对象储存账号密码
         final Map<String, String> map = new HashMap<>();
                 map.put("username", username);
@@ -102,8 +125,15 @@ public class LoginActivity  extends AppCompatActivity {
                 if(response.isSuccessful() && response.body() != null){
                     Log.d("Success--->", String.valueOf(response.body()));
 
-                    //使用HashMap accountJsonMap存储请求所得的登录JSON数据
+                    //使用HashMap accountJsonMap存储请求所得的登录JSON数据，然后用SP储存sessionid
                     HashMap<String,String> accountJsonMap =  response.body();
+                    String sessionid = accountJsonMap.get("sessionid");
+                    if (sessionid != null){
+                        Log.d("sessionid--------->",sessionid);
+                        editor.putString("sessionid",sessionid);
+                        editor.apply();
+                    }
+                    //通过ID的值判断是否登录成功
                     if (accountJsonMap.get("id") != null){
                         Toast.makeText(mContext,"登录成功",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
@@ -125,6 +155,23 @@ public class LoginActivity  extends AppCompatActivity {
         });
 
     }
+
+
+    //使用已储存的账号和密码
+    private void useRememberUser() {
+        boolean isRemember = pref.getBoolean("remember_password",false);
+        if(isRemember){
+            //将账号和密码都设置到文本框中
+            String username = pref.getString("username","");
+            String password = pref.getString("password","");
+            editText_username.setText(username);
+            editText_pwd.setText(password);
+            rememberPass.setChecked(true);
+        }
+    }
+
+
+    //跳转注册
    public void signup(View v){
        startActivity(new Intent(LoginActivity.this,SignupActivity.class));
    }

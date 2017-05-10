@@ -1,10 +1,13 @@
 package com.example.yuan.imagerecognitionmanager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -24,9 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yuan.imagerecognitionmanager.image.PicassoImageLoader;
-import com.example.yuan.imagerecognitionmanager.javaBean.UploadResult;
-import com.example.yuan.imagerecognitionmanager.network.ServiceGenerator;
-import com.example.yuan.imagerecognitionmanager.network.api.ImageUpload;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.loader.ImageLoader;
@@ -40,31 +40,20 @@ import com.lzy.okserver.upload.UploadInfo;
 import com.lzy.okserver.upload.UploadManager;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.Cookie;
-import okhttp3.HttpUrl;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity  implements ExecutorWithListener.OnAllTaskEndListener {
-
+    private static final String URL_uploadPicture ="http://114.115.139.232:8080/xxzx/a/tpsb/uploadPicture";
+    private String sessionid;
     GridView gridView;
     TextView imageinfo;
     ArrayList<ImageItem> imagesList;
     ImagePicker imagePicker;
     private ArrayList<ImageItem> images;
     private UploadManager uploadManager;
-
+    int SuccessNum = 0;
 
 
     //底部Tab菜单栏
@@ -105,6 +94,11 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
 
         uploadManager = UploadManager.getInstance();
 
+
+//        //在SP中获取sessionid
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        sessionid = prefs.getString("sessionid","");
+
         //使用ImagePicker，仿微信的图片选择
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new PicassoImageLoader());
@@ -116,7 +110,7 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
     protected void onDestroy() {
         super.onDestroy();
         //记得移除
-        uploadManager.getThreadPool().getExecutor().removeOnAllTaskEndListener(this);
+//        uploadManager.getThreadPool().getExecutor().removeOnAllTaskEndListener(this);
     }
 
 
@@ -142,21 +136,21 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
 
 
     
-    //点击后上传图片,使用了
+    //点击后上传图片,使用了OkGo
     public void upload(View view){
         Toast.makeText(MainActivity.this,"正在上传",Toast.LENGTH_SHORT).show();
         if (images != null) {
             for (int i = 0; i < images.size(); i++) {
                 MyUploadListener listener = new MyUploadListener();
+//                //更新数据到GridView
 //                listener.setUserTag(gridView.getChildAt(i));
-                PostRequest postRequest = OkGo.post("http://114.115.139.232:8080/xxzx/a/tpsb/uploadPicture;JSESSIONID=")
-                        .headers("headerKey1", "headerValue1")//
-                        .headers("headerKey2", "headerValue2")//
-                        .params("paramKey1", "paramValue1")//
-                        .params("paramKey2", "paramValue2")//
-                        .params("fileKey" + i, new File(images.get(i).path));
+                PostRequest postRequest = OkGo.post(URL_uploadPicture+";JSESSIONID="+sessionid)
+                        .params("fileKey" + i, new File(images.get(i).path));//多文件上传
                 uploadManager.addTask(images.get(i).path, postRequest, listener);
             }
+        }
+        else {
+            Toast.makeText(MainActivity.this,"没有选择图片",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -167,8 +161,6 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             if (data != null && requestCode ==200) {
                 images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-//                MyAdapter adapter = new MyAdapter(images);
-//                gridView.setAdapter(adapter);
                   Toast.makeText(this,"已选择"+ images.size() + "张",Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "没有选择图片", Toast.LENGTH_SHORT).show();
@@ -178,54 +170,8 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
 
     @Override
     public void onAllTaskEnd() {
-
     }
 
-    //GridView 适配器
-    private class MyAdapter extends BaseAdapter {
-
-        private List<ImageItem> items;
-
-        public MyAdapter(List<ImageItem> items) {
-            this.items = items;
-        }
-
-        public void setData(List<ImageItem> items) {
-            this.items = items;
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return items.size();
-        }
-
-        @Override
-        public ImageItem getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageView;
-            int size = gridView.getWidth() / 3;
-            if (convertView == null) {
-                imageView = new ImageView(MainActivity.this);
-                AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, size);
-                imageView.setLayoutParams(params);
-                imageView.setBackgroundColor(Color.parseColor("#88888888"));
-            } else {
-                imageView = (ImageView) convertView;
-            }
-            imagePicker.getImageLoader().displayImage(MainActivity.this, getItem(position).path, imageView, size, size);
-            return imageView;
-        }
-    }
 
     //上传管理器
     private class MyUploadListener extends UploadListener<String>{
@@ -237,7 +183,11 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
 
         @Override
         public void onFinish(String s) {
-            Toast.makeText(MainActivity.this,"上传成功:"+s,Toast.LENGTH_LONG).show();
+            SuccessNum++;
+            Toast.makeText(MainActivity.this,"第"+SuccessNum+"张,上传成功",Toast.LENGTH_LONG).show();
+            if (SuccessNum == images.size()){
+                Toast.makeText(MainActivity.this,"所有图片上传完成",Toast.LENGTH_LONG).show();
+            }
             Log.e("MyUploadListener", "finish:" + s);
         }
 

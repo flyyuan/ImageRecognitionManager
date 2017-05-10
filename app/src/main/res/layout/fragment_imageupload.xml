@@ -49,10 +49,8 @@
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:horizontalSpacing="5dp"
-        android:numColumns="3"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:verticalSpacing="5dp"></GridView>
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+       />
 
 </LinearLayout>
