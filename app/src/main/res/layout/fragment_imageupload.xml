@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainActivityBackground">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/imageinfo"
@@ -42,15 +48,14 @@
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-    <GridView
+    <com.lzy.widget.ExpandGridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
+        android:horizontalSpacing="3dp"
+        android:numColumns="3"
+        android:verticalSpacing="3dp"
        />
+    </LinearLayout>
 
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

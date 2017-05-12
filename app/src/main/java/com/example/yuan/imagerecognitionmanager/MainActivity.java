@@ -1,9 +1,7 @@
 package com.example.yuan.imagerecognitionmanager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,25 +12,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yuan.imagerecognitionmanager.image.PicassoImageLoader;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
-import com.lzy.imagepicker.loader.ImageLoader;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.cookie.store.CookieStore;
 import com.lzy.okgo.request.PostRequest;
 import com.lzy.okserver.listener.UploadListener;
 import com.lzy.okserver.task.ExecutorWithListener;
@@ -41,13 +31,11 @@ import com.lzy.okserver.upload.UploadManager;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity  implements ExecutorWithListener.OnAllTaskEndListener {
     private static final String URL_uploadPicture ="http://114.115.139.232:8080/xxzx/a/tpsb/uploadPicture";
     private String sessionid;
-    GridView gridView;
     TextView imageinfo;
     ArrayList<ImageItem> imagesList;
     ImagePicker imagePicker;
@@ -86,9 +74,6 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         replaceFragment(new StateFragment());
-
-        //初始化gridView和imageinfo和imageList
-        gridView = bindView(R.id.gridView);
         imageinfo = bindView(R.id.imageinfo);
         imagesList = new ArrayList<>();
 
@@ -105,7 +90,8 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         imagePicker.setShowCamera(true);
         imagePicker.setSaveRectangle(true);
         imagePicker.setSelectLimit(50);
-        
+
+
     }
     protected void onDestroy() {
         super.onDestroy();
@@ -142,8 +128,6 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         if (images != null) {
             for (int i = 0; i < images.size(); i++) {
                 MyUploadListener listener = new MyUploadListener();
-//                //更新数据到GridView
-//                listener.setUserTag(gridView.getChildAt(i));
                 PostRequest postRequest = OkGo.post(URL_uploadPicture+";JSESSIONID="+sessionid)
                         .params("fileKey" + i, new File(images.get(i).path));//多文件上传
                 uploadManager.addTask(images.get(i).path, postRequest, listener);
@@ -168,6 +152,7 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         }
     }
 
+
     @Override
     public void onAllTaskEnd() {
     }
@@ -176,9 +161,10 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
     //上传管理器
     private class MyUploadListener extends UploadListener<String>{
 
+
         @Override
         public void onProgress(UploadInfo uploadInfo) {
-
+            Log.e("MyUploadListener", "onProgress:" + uploadInfo.getTotalLength() + " " + uploadInfo.getUploadLength() + " " + uploadInfo.getProgress());
         }
 
         @Override

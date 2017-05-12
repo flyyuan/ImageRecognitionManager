@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import com.lzy.okserver.task.ExecutorWithListener;
@@ -22,7 +23,6 @@ import butterknife.BindView;
  */
 
 public class ImageUploadFragment extends Fragment{
-    @BindView(R.id.gridview)GridView gridView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.fragment_imageupload, container, false);

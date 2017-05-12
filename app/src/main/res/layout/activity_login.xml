@@ -11,7 +11,7 @@
        android:src="@mipmap/ic_launcher"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:layout_marginBottom="24dp"
+       android:layout_marginBottom="24px"
        android:layout_gravity="center_horizontal"
        />
     <android.support.design.widget.TextInputLayout
