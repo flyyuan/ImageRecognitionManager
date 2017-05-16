@@ -2,6 +2,7 @@ package com.example.yuan.imagerecognitionmanager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,11 +37,13 @@ import com.lzy.okserver.upload.UploadManager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity  implements ExecutorWithListener.OnAllTaskEndListener {
     private static final String URL_uploadPicture ="http://114.115.139.232:8080/xxzx/a/tpsb/uploadPicture";
     private String sessionid;
+    GridView gridView;
     TextView imageinfo;
     ArrayList<ImageItem> imagesList;
     ImagePicker imagePicker;
@@ -74,7 +82,6 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         replaceFragment(new StateFragment());
-        imageinfo = bindView(R.id.imageinfo);
         imagesList = new ArrayList<>();
 
         uploadManager = UploadManager.getInstance();
@@ -189,8 +196,6 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
             return response.body().string();
         }
     }
-
-
 
 
     //双击退出

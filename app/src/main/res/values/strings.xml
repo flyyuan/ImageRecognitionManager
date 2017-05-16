@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ImageRecognitionManager</string>
+    <string name="app_name">识图管理</string>
     <string name="title_state">动态</string>
     <string name="title_picmanage">图片管理</string>
     <string name="title_me">我</string>

@@ -11,9 +11,13 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
+import com.lzy.imagepicker.adapter.ImageGridAdapter;
+import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.okserver.task.ExecutorWithListener;
 import com.lzy.okserver.upload.UploadManager;
 
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -23,7 +27,7 @@ import butterknife.BindView;
  */
 
 public class ImageUploadFragment extends Fragment{
-
+    ArrayList<ImageItem> images = null;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.fragment_imageupload, container, false);
         return view;

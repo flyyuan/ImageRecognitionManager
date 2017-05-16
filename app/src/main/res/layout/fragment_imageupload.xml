@@ -1,44 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:background="@color/mainActivityBackground"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/titleBackground">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="图像管理"
+            android:textSize="24dp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1">
 
-    <TextView
-        android:id="@+id/imageinfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="请选择需要上传的图片"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="20dp"/>
-    <Button
-        android:onClick="selectImage"
-        android:id="@+id/selectImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/buttonColor"
-        android:textSize="20dp"
-        android:text="选择图片"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"/>
+        android:layout_height="30dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/selectImage"
+                android:layout_width="328dp"
+                android:layout_height="214dp"
+                android:background="@drawable/imageupload_button"
+                android:onClick="selectImage"
+                android:layout_weight="0.46"
+                tools:ignore="InefficientWeight" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:weightSum="1">
     <Button
         android:onClick="upload"
         android:id="@+id/imageUpload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/buttonColor"
+        android:layout_width="348dp"
+        android:layout_height="64dp"
         android:text="上传图片"
-        android:textSize="20dp"
-        />
+        android:background="@color/buttonColor"
+        android:textSize="20dp" />
+        </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="20dp" />
@@ -48,14 +77,6 @@
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         />
-    <com.lzy.widget.ExpandGridView
-        android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:horizontalSpacing="3dp"
-        android:numColumns="3"
-        android:verticalSpacing="3dp"
-       />
     </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</LinearLayout>
