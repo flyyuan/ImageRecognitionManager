@@ -2,7 +2,6 @@ package com.example.yuan.imagerecognitionmanager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,14 +12,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +27,7 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.PostRequest;
 import com.lzy.okserver.listener.UploadListener;
 import com.lzy.okserver.task.ExecutorWithListener;
@@ -37,11 +36,15 @@ import com.lzy.okserver.upload.UploadManager;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 
 public class MainActivity extends AppCompatActivity  implements ExecutorWithListener.OnAllTaskEndListener {
-    private static final String URL_uploadPicture ="http://114.115.139.232:8080/xxzx/a/tpsb/uploadPicture";
+    private static final String URL_base = "http://114.115.139.232:8080/xxzx/a/tpsb/";
+    private static final String URL_uploadPicture =URL_base + "uploadPicture";
+    private static final String URL_getPicByKeyWord =URL_base + "queryPicByKeyWord";
     private String sessionid;
     GridView gridView;
     TextView imageinfo;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
     private ArrayList<ImageItem> images;
     private UploadManager uploadManager;
     int SuccessNum = 0;
+
 
 
     //底部Tab菜单栏
@@ -98,7 +102,6 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         imagePicker.setSaveRectangle(true);
         imagePicker.setSelectLimit(50);
 
-
     }
     protected void onDestroy() {
         super.onDestroy();
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
 
 
     
-    //点击后上传图片,使用了OkGo
+    //点击后上传图片,使用了OkGo2
     public void upload(View view){
         Toast.makeText(MainActivity.this,"正在上传",Toast.LENGTH_SHORT).show();
         if (images != null) {
@@ -158,6 +161,13 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
             }
         }
     }
+
+    //通过get请求,导出图片标签
+    public void getPicByKeyWordActivity(View v){
+      Intent intent = new  Intent(MainActivity.this,GetkeywordActivity.class);
+        startActivity(intent);
+    }
+
 
 
     @Override

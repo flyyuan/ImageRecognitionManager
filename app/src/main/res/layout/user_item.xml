@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:textSize="@dimen/dp_22" />
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/forbid_write_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        style="@style/round_rect_btn_bkg"
+        android:text="禁止填写选择"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="vertical">
+    <Button
+        android:id="@+id/forbid_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/round_rect_btn_bkg"
+        android:text="禁止填写"/>
+    <Button
+        android:id="@+id/forbid_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/round_rect_btn_bkg"
+        android:text="禁止选择"/>
+    </LinearLayout>
+</LinearLayout>

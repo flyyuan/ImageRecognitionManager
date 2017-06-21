@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/mainActivityBackground"
     android:weightSum="1">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,14 +15,15 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="动态"
+            android:text="用户管理"
             android:textSize="24dp"
             android:textColor="@color/white"/>
 
     </LinearLayout>
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_manage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello World"/>
+        android:layout_height="match_parent"/>
+
 </LinearLayout>
