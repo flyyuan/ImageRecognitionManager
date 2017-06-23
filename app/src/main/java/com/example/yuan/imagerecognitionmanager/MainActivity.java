@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
     private static final String URL_base = "http://114.115.139.232:8080/xxzx/a/tpsb/";
     private static final String URL_uploadPicture =URL_base + "uploadPicture";
     private static final String URL_getPicByKeyWord =URL_base + "queryPicByKeyWord";
+    private static final String URL_exit = "http://114.115.139.232:8080/xxzx/a/logout";
     private String sessionid;
     GridView gridView;
     TextView imageinfo;
@@ -231,6 +232,15 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         } else {
             this.finish();
         }
+    }
+
+    public void exitApp(View view) {
+        OkGo.get(URL_exit+";JSESSIONID="+sessionid).execute(new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            }
+        });
     }
 
 }

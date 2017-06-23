@@ -144,9 +144,15 @@ public class LoginActivity  extends AppCompatActivity {
                     //使用HashMap accountJsonMap存储请求所得的登录JSON数据，然后用SP储存sessionid
                     HashMap<String,String> accountJsonMap =  response.body();
                     String sessionid = accountJsonMap.get("sessionid");
+                    String name = accountJsonMap.get("name");
+                    String loginName = accountJsonMap.get("loginName");
                     if (sessionid != null){
                         Log.d("sessionid--------->",sessionid);
+                        Log.d("--------->",name);
+                        Log.d("--------->",loginName);
                         editor.putString("sessionid",sessionid);
+                        editor.putString("name",name);
+                        editor.putString("loginName",loginName);
                         editor.apply();
                     }
                     //通过ID的值判断是否登录成功

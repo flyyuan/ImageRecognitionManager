@@ -15,6 +15,7 @@ public class User {
      * writeSuccNum : 2
      * selectNum : 0
      * selectSuccNum : 0
+     * jurisdicStatus : 3
      */
 
     private boolean isNewRecord;
@@ -24,6 +25,7 @@ public class User {
     private int writeSuccNum;
     private int selectNum;
     private int selectSuccNum;
+    private int jurisdicStatus;
 
     public boolean isIsNewRecord() {
         return isNewRecord;
@@ -79,5 +81,13 @@ public class User {
 
     public void setSelectSuccNum(int selectSuccNum) {
         this.selectSuccNum = selectSuccNum;
+    }
+
+    public int getJurisdicStatus() {
+        return jurisdicStatus;
+    }
+
+    public void setJurisdicStatus(int jurisdicStatus) {
+        this.jurisdicStatus = jurisdicStatus;
     }
 }

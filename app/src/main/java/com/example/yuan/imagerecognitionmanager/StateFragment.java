@@ -3,7 +3,9 @@ package com.example.yuan.imagerecognitionmanager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,21 +36,41 @@ public class StateFragment extends Fragment {
     private static final String URL_userManage = "http://114.115.139.232:8080/xxzx/a/tpsb/userManage/getAllUserTagResult";
     private List<User> userList = new ArrayList<>();
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private UserAdapter adapter;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
         View view = inflater.inflate(R.layout.fragment_state, container , false);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshUsers();
+            }
+        });
 //        initUsers(); // 这一行代码如果写在这个地方   在网络非常好的情况下   会出现问题   当然  这个问题发生的概率很小很小
         recyclerView = (RecyclerView) view.findViewById(R.id.user_manage);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
-        initUsers(); // 这一行代码如果写在这个地方   在网络非常好的情况下   会出现问题   当然  这个问题发生的概率很小很小
+        initUsers();
         // 这样就没毛病了       记住一点  在进行  赋值操作的时候  要保证所赋值的对象不为NULL    好了
         return view;
     }
+
+    private void refreshUsers() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                        initUsers();
+                        swipeRefreshLayout.setRefreshing(false);
+            }
+        }).start();
+    }
+
     //初始化用户列表数据
-    private void initUsers() {
+    public void initUsers() {
         //在SP中获取sessionid
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sessionid = prefs.getString("sessionid","");
