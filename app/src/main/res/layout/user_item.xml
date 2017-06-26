@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_gravity="center_vertical"
-        android:textSize="@dimen/dp_22" />
+        android:textSize="22dp" />
 
 
         <Button

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.yuan.imagerecognitionmanager.FindTaskByDateActivity"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="#cd3636"
+        >
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:scaleType="fitCenter"
+            />
+
+        <TextView
+            android:id="@+id/calendar_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2016/10/10"
+            android:textColor="#ffffff"
+            />
+
+        <View
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            />
+
+    </LinearLayout>
+
+<com.codbking.calendar.CalendarLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <com.codbking.calendar.CalendarDateView
+        android:id="@+id/calendarDateView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
+
+    
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/taskList"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"/>
+    </com.codbking.calendar.CalendarLayout>
+
+</LinearLayout>

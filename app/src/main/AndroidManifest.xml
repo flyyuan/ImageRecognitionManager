@@ -29,7 +29,8 @@
             android:theme="@style/ImagePickerThemeFullScreen" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".GetkeywordActivity"></activity>
+        <activity android:name=".GetkeywordActivity" />
+        <activity android:name=".FindTaskByDateActivity"></activity>
     </application>
 
 </manifest>

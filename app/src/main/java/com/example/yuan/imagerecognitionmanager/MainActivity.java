@@ -169,6 +169,12 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         startActivity(intent);
     }
 
+    //通过get请求,导出图片标签
+    public void findTaskByDateActivity(View v){
+        Intent intent = new  Intent(MainActivity.this,FindTaskByDateActivity.class);
+        startActivity(intent);
+    }
+
 
 
     @Override

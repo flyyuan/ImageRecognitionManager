@@ -81,6 +81,18 @@
                 android:background="@color/buttonColor"
                 android:textSize="20dp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <Button
+                android:onClick="findTaskByDateActivity"
+                android:layout_width="348dp"
+                android:layout_height="64dp"
+                android:text="任务完成情况"
+                android:background="@color/buttonColor"
+                android:textSize="20dp" />
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
