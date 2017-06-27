@@ -2,9 +2,12 @@ package com.example.yuan.imagerecognitionmanager;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,6 +43,12 @@ public class GetkeywordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getkeyword);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_getkeyword);
+        toolbar.setTitle("导出标签");
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
         queryPicByKeyWordEdt = (EditText) findViewById(R.id.queryPicByKeyWordEdt);
         getPicByKeyWordText = (TextView)findViewById(R.id.getPicByKeyWord) ;
         getPicByKeyWordImage = (ImageView) findViewById(R.id.getPicByKeyWordImage);
@@ -101,5 +110,13 @@ public class GetkeywordActivity extends AppCompatActivity {
     //加载标签图片
     private void setgetPicByKeyWordImage(String url){
         Glide.with(this).load(url).into(getPicByKeyWordImage);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return true;
     }
 }

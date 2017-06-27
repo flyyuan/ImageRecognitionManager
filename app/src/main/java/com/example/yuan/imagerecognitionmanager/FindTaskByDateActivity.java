@@ -2,12 +2,15 @@ package com.example.yuan.imagerecognitionmanager;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -38,6 +41,7 @@ import okhttp3.Response;
 
 public class FindTaskByDateActivity extends AppCompatActivity {
     TextView mTitle;
+    Toolbar toolbar;
     CalendarDateView mCalendarDateView;
     RecyclerView taskList;
     TaskListAdapter taskListAdapter;
@@ -51,6 +55,13 @@ public class FindTaskByDateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_task_by_date);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_findtask);
+        toolbar.setTitle("任务完成情况");
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         ButterKnife.bind(this);
         mCalendarDateView = (CalendarDateView) findViewById(R.id.calendarDateView);
         mTitle = (TextView) findViewById(R.id.calendar_title);
@@ -64,6 +75,11 @@ public class FindTaskByDateActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(FindTaskByDateActivity.this);
         sessionid = prefs.getString("sessionid","");
     }
+
+    private void setmtoolbar(){
+
+    }
+
 
     private void findTaskByDate(String date) {
         OkGo.get(URL_findTaskByDate+ ";JSESSIONID=" +sessionid)
@@ -135,6 +151,14 @@ public class FindTaskByDateActivity extends AppCompatActivity {
 
         int[] data = CalendarUtil.getYMD(new Date());
         mTitle.setText("当前日期：" + data[0] + "/" + data[1] + "/" + data[2]);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return true;
     }
 
 }

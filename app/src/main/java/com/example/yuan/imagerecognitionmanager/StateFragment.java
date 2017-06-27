@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class StateFragment extends Fragment {
     private String sessionid;
     private static final String URL_userManage = "http://114.115.139.232:8080/xxzx/a/tpsb/userManage/getAllUserTagResult";
     private List<User> userList = new ArrayList<>();
+    Toolbar toolbar;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private UserAdapter adapter;
@@ -41,6 +43,7 @@ public class StateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
         View view = inflater.inflate(R.layout.fragment_state, container , false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar_state);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -53,9 +56,14 @@ public class StateFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
+        setToolbar();
         initUsers();
         // 这样就没毛病了       记住一点  在进行  赋值操作的时候  要保证所赋值的对象不为NULL    好了
         return view;
+    }
+
+    private void setToolbar(){
+        toolbar.setTitle("用户管理");
     }
 
     private void refreshUsers() {

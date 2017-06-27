@@ -11,5 +11,8 @@
     <style name="round_rect_btn_bkg">
         <item name="android:background">@drawable/round_rect_btn_selector</item>
     </style>
-
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="actionMenuTextColor">@color/white</item> <!--  敲定颜色-->
+        <item name="android:textSize">18sp</item> <!--  搞掂字体大小-->
+    </style>
 </resources>
