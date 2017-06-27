@@ -10,4 +10,14 @@
     <color name="buttonColor">#A0BEE4</color>
     <color name="red">#d41313</color>
     <color name="greed">#dd0e8138</color>
+
+
+
+    <color name="red_normal">#FF0000</color>
+    <color name="red_pressed">#FF6666</color>
+    <color name="green_normal">#37C000</color>
+    <color name="green_pressed">#30A070</color>
+    <color name="purple_normal">#9932CC</color>
+    <color name="purple_pressed">#9F79EE</color>
+    <color name="white_pressed">#FFCFCFCF</color>
 </resources>
