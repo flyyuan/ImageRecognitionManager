@@ -30,7 +30,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".GetkeywordActivity" />
-        <activity android:name=".FindTaskByDateActivity"></activity>
+        <activity android:name=".FindTaskByDateActivity" />
+        <activity android:name=".LineChartActivity"></activity>
     </application>
 
 </manifest>

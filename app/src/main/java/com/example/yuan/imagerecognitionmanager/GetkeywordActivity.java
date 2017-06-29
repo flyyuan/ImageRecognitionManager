@@ -1,10 +1,13 @@
 package com.example.yuan.imagerecognitionmanager;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -14,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.yuan.imagerecognitionmanager.adapter.GetPicByKeyWordAdapter;
+import com.example.yuan.imagerecognitionmanager.adapter.MyDividerItemDecoration;
+import com.example.yuan.imagerecognitionmanager.javaBean.PicByWord;
 import com.example.yuan.imagerecognitionmanager.javaBean.PictureTab;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,11 +39,13 @@ public class GetkeywordActivity extends AppCompatActivity {
     private static final String URL_base = "http://114.115.139.232:8080/xxzx/a/tpsb/";
     private static final String URL_getPicByKeyWord =URL_base + "queryPicByKeyWord";
     EditText queryPicByKeyWordEdt;
-    TextView getPicByKeyWordText;
-    ImageView getPicByKeyWordImage;
+//    TextView getPicByKeyWordText;
+//    ImageView getPicByKeyWordImage;
     private String labsJSON;
     private String baseImageUrl = "http://114.115.139.232:8080/pic/image/";
     private String imageUrl;
+    private RecyclerView getWordRecycerView;
+    private GetPicByKeyWordAdapter getPicByKeyWordAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +58,12 @@ public class GetkeywordActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         queryPicByKeyWordEdt = (EditText) findViewById(R.id.queryPicByKeyWordEdt);
-        getPicByKeyWordText = (TextView)findViewById(R.id.getPicByKeyWord) ;
-        getPicByKeyWordImage = (ImageView) findViewById(R.id.getPicByKeyWordImage);
+        getWordRecycerView = (RecyclerView) findViewById(R.id.rv_getPicByKeyWord);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        getWordRecycerView.setLayoutManager(layoutManager);
+        getWordRecycerView.addItemDecoration(new MyDividerItemDecoration(GetkeywordActivity.this,LinearLayoutManager.VERTICAL));
+//        getPicByKeyWordText = (TextView)findViewById(R.id.getPicByKeyWord) ;
+//        getPicByKeyWordImage = (ImageView) findViewById(R.id.getPicByKeyWordImage);
         //在SP中获取sessionid
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(GetkeywordActivity.this);
         sessionid = prefs.getString("sessionid","");
@@ -77,40 +89,48 @@ public class GetkeywordActivity extends AppCompatActivity {
                 });
     }
 
-    private void parseJSONWithGSON(String s) {
-        String pictureName;
-        String finishTime ;
-        List<String> labs = new ArrayList<>();
+//    private void parseJSONWithGSON(String s) {
+//        String pictureName;
+//        String finishTime ;
+//        List<String> labs = new ArrayList<>();
+//        Gson gson = new Gson();
+//        List<PictureTab>tabList = gson.fromJson(s, new TypeToken<List<PictureTab>>(){}.getType());
+//        for (PictureTab labels : tabList){
+//                labs.addAll(labels.getLabels());
+//                pictureName = labels.getPicture_name();
+//                finishTime = labels.getFinish_time();
+//                Log.d("---", "parseJSONWithGSON: "+ labs);
+//                Log.d("---", "parseJSONWithGSON: "+ pictureName);
+//                Log.d("---", "parseJSONWithGSON: "+ finishTime);
+//            labs.add(finishTime +"\n");
+//            imageUrl = baseImageUrl + pictureName;
+////            setTextLabsAndTime(labs);
+////            setgetPicByKeyWordImage(imageUrl);
+//        }
+//    }
+
+    private void parseJSONWithGSON(String s){
         Gson gson = new Gson();
-        List<PictureTab>tabList = gson.fromJson(s, new TypeToken<List<PictureTab>>(){}.getType());
-        for (PictureTab labels : tabList){
-            labs.addAll(labels.getLabels());
-            pictureName = labels.getPicture_name();
-            finishTime = labels.getFinish_time();
-            Log.d("---", "parseJSONWithGSON: "+ labs);
-            Log.d("---", "parseJSONWithGSON: "+ pictureName);
-            Log.d("---", "parseJSONWithGSON: "+ finishTime);
-            labs.add(finishTime +"\n");
-            imageUrl = baseImageUrl + pictureName;
-            setTextLabsAndTime(labs);
-            setgetPicByKeyWordImage(imageUrl);
-        }
+        List<PicByWord> picByWordsList = gson.fromJson(s,new TypeToken<List<PicByWord>>()
+        {}.getType());
+        getPicByKeyWordAdapter = new GetPicByKeyWordAdapter(picByWordsList,GetkeywordActivity.this);
+        getWordRecycerView.setAdapter(getPicByKeyWordAdapter);
     }
 
-    //设置标签
-    private void setTextLabsAndTime(List<String> labs) {
-        if (labsJSON.length() != 2) {
-            getPicByKeyWordText.setText(labs.toString());
-        }
-        else {
-            getPicByKeyWordText.setText("暂无此标签数据");
-        }
-    }
+//    //设置标签
+//    private void setTextLabsAndTime(List<String> labs) {
+//        if (labsJSON.length() != 2) {
+//            getPicByKeyWordText.setText(labs.toString());
+//        }
+//        else {
+//            getPicByKeyWordText.setText("暂无此标签数据");
+//        }
+//    }
 
-    //加载标签图片
-    private void setgetPicByKeyWordImage(String url){
-        Glide.with(this).load(url).into(getPicByKeyWordImage);
-    }
+//    //加载标签图片
+//    private void setgetPicByKeyWordImage(String url){
+//        Glide.with(this).load(url).into(getPicByKeyWordImage);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -13,6 +13,12 @@
 
 
 
+    <color name="brown_normal">#9f6d21</color>
+    <color name="brown_pressed">#FFFC9903</color>
+    <color name="bule_normal">#2c589b</color>
+    <color name="bule_pressed">#0243f5</color>
+    <color name="yellow_normal">#f5d20c</color>
+    <color name="yellow_pressed">#b69c2a</color>
     <color name="red_normal">#FF0000</color>
     <color name="red_pressed">#FF6666</color>
     <color name="green_normal">#37C000</color>

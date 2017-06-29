@@ -69,7 +69,6 @@ public class FindTaskByDateActivity extends AppCompatActivity {
         initView();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         taskList.setLayoutManager(layoutManager);
-        taskList.setLayoutManager(layoutManager);
         taskList.addItemDecoration(new MyDividerItemDecoration(FindTaskByDateActivity.this,LinearLayoutManager.VERTICAL));
         //在SP中获取sessionid
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(FindTaskByDateActivity.this);
