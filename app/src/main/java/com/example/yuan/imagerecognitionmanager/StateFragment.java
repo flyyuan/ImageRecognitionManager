@@ -129,7 +129,7 @@ public class StateFragment extends Fragment {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        Log.d("用户列表2----------", s);
+                        Log.d("用户列表2--------------", s);
                         parseJSONWithGSON(s);
                     }
                 });
