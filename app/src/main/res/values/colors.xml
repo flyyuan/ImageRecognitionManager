@@ -12,18 +12,20 @@
     <color name="greed">#dd0e8138</color>
 
 
-
-    <color name="brown_normal">#9f6d21</color>
-    <color name="brown_pressed">#FFFC9903</color>
-    <color name="bule_normal">#2c589b</color>
-    <color name="bule_pressed">#0243f5</color>
-    <color name="yellow_normal">#f5d20c</color>
-    <color name="yellow_pressed">#b69c2a</color>
-    <color name="red_normal">#FF0000</color>
-    <color name="red_pressed">#FF6666</color>
-    <color name="green_normal">#37C000</color>
-    <color name="green_pressed">#30A070</color>
-    <color name="purple_normal">#9932CC</color>
-    <color name="purple_pressed">#9F79EE</color>
+    <color name="qing_normal">#54c62c</color>
+    <color name="qin_normal">#3d8922</color>
+    <color name="qin_pressed">#3d8922</color>
+    <color name="brown_normal">#a3a709</color>
+    <color name="brown_pressed">#a3a709</color>
+    <color name="bule_normal">#fcab29</color>
+    <color name="bule_pressed">#fcab29</color>
+    <color name="yellow_normal">#223084</color>
+    <color name="yellow_pressed">#223084</color>
+    <color name="red_normal">#a75940</color>
+    <color name="red_pressed">#a75940</color>
+    <color name="green_normal">#d5d5da</color>
+    <color name="green_pressed">#d5d5da</color>
+    <color name="purple_normal">#fe5e56</color>
+    <color name="purple_pressed">#fe5e56</color>
     <color name="white_pressed">#FFCFCFCF</color>
 </resources>

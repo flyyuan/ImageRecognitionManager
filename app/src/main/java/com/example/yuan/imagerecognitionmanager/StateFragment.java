@@ -212,7 +212,7 @@ public class StateFragment extends Fragment {
                 swipeRightMenu.addMenuItem(closeSelect); // 禁止选择
 
                 SwipeMenuItem closeWrite = new SwipeMenuItem(getActivity())
-                        .setBackgroundDrawable(R.drawable.selector_purple)
+                        .setBackgroundDrawable(R.drawable.selector_qin)
                         .setText("禁止填写")
                         .setTextColor(Color.WHITE)
                         .setWidth(width)

@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!-- 向SDCard写入数据权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -31,7 +35,10 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".GetkeywordActivity" />
         <activity android:name=".FindTaskByDateActivity" />
-        <activity android:name=".LineChartActivity"></activity>
+        <activity android:name=".LineChartActivity" />
+        <activity android:name=".UsertagActivity" />
+        <activity android:name=".modifyPwdActivity" />
+        <activity android:name=".getUserPicByKeyWordActivity"></activity>
     </application>
 
 </manifest>

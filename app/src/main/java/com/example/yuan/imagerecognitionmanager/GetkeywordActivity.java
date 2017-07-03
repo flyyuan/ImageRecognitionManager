@@ -1,7 +1,9 @@
 package com.example.yuan.imagerecognitionmanager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yuan.imagerecognitionmanager.adapter.GetPicByKeyWordAdapter;
@@ -28,7 +31,14 @@ import com.lzy.okgo.callback.StringCallback;
 
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -41,7 +51,7 @@ public class GetkeywordActivity extends AppCompatActivity {
     EditText queryPicByKeyWordEdt;
 //    TextView getPicByKeyWordText;
 //    ImageView getPicByKeyWordImage;
-    private String labsJSON;
+    private String labsJSON = null;
     private String baseImageUrl = "http://114.115.139.232:8080/pic/image/";
     private String imageUrl;
     private RecyclerView getWordRecycerView;
@@ -52,7 +62,7 @@ public class GetkeywordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getkeyword);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_getkeyword);
-        toolbar.setTitle("导出标签");
+        toolbar.setTitle("搜索和导出图片标签");
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -131,6 +141,35 @@ public class GetkeywordActivity extends AppCompatActivity {
 //    private void setgetPicByKeyWordImage(String url){
 //        Glide.with(this).load(url).into(getPicByKeyWordImage);
 //    }
+
+    //导出标签生成TXT文件
+    public void exportTagTotxt(View view){
+        if(labsJSON != null){
+//        byte[] buffer = labsJSON.getBytes();
+        BufferedWriter bufferedWriter = null;
+        try {
+            //获取当前时间
+            SimpleDateFormat   formatter   =   new SimpleDateFormat("yyyy.MM.dd--HH:mm:ss");
+            Date curDate =  new Date(System.currentTimeMillis());
+            String   newTime  =   formatter.format(curDate);
+
+            File file = new File(getExternalFilesDir(null),newTime +".txt");
+            FileOutputStream outputStream = new FileOutputStream(file);
+            byte[] labsTXT = labsJSON.getBytes();
+            outputStream.write(labsTXT);
+            outputStream.close();
+            Toast.makeText(GetkeywordActivity.this,"导出成功,目录："+getExternalFilesDir(null).toString(),
+                    Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(GetkeywordActivity.this, "导出失败", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+    else {
+            Toast.makeText(GetkeywordActivity.this,"请获取标签后再导出",Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

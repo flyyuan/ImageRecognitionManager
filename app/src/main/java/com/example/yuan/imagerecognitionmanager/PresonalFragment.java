@@ -47,8 +47,8 @@ public class PresonalFragment extends Fragment {
         loginName = prefs.getString("loginName","");
         Log.d("--------->",name);
         Log.d("--------->",loginName);
-        name_tv.setText(name);
-        input_name.setText(loginName);
+        name_tv.setText("用户名："+name);
+        input_name.setText("登录名："+loginName);
     }
 
 

@@ -12,12 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -175,6 +172,11 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         startActivity(intent);
     }
 
+    //通过get请求,导出图片标签
+    public void getUserPicByKeyWordActivity(View v){
+        Intent intent = new  Intent(MainActivity.this,getUserPicByKeyWordActivity.class);
+        startActivity(intent);
+    }
 
 
     @Override
@@ -238,6 +240,10 @@ public class MainActivity extends AppCompatActivity  implements ExecutorWithList
         } else {
             this.finish();
         }
+    }
+
+    public void changePassword(View view){
+        startActivity(new Intent(MainActivity.this,modifyPwdActivity.class));
     }
 
     public void exitApp(View view) {

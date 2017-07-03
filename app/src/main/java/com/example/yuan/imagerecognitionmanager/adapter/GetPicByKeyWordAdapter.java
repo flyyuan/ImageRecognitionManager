@@ -50,7 +50,7 @@ public class GetPicByKeyWordAdapter  extends RecyclerView.Adapter<GetPicByKeyWor
 
         Glide.with(mContext)
                 .load(imageUrl)
-                .placeholder(R.drawable.nothing)
+                .placeholder(R.drawable.loading)
                 .into(holder.picImage);
     }
 
